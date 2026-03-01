@@ -83,4 +83,14 @@ class Str{
     public static function areEqual(string ...$strings): bool{
         return count(array_unique($strings)) === 1;
     }
+
+    /**
+     * Check whether a string is empty
+     * * The method uses the `trim()` function and compares it to an empty string and returns the result
+     * @param string $string
+     * @return bool
+     */
+    public static function isEmpty(string $string){
+        return trim($string) === "";
+    }
 }
