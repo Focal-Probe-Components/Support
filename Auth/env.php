@@ -4,33 +4,63 @@ namespace Probe\Env\Blueprints;
 use Probe\Env\Contracts\EnvBlueprintInterface as Contract;
 
 use Dotenv\Dotenv;
+enum Env:string implements Contract{
 
-/** https://patl.ink/focal/docs/stubs/ */
-enum {{ TemplateName }}: string implements Contract{
-
+    /** GOOGLE OAUTH */
     /**
-     * STRUCTURE: case {ALIAS} = {ACTUAL NAME};
-     * EXAMPLE: case VARIABLE = "IMPORTANT_VAR";
+     * A boolean value to determine whether or not Google Oauth is enabled
+     * @var bool
      */
+    case GOOGLE_OAUTH = "GOOGLE_OAUTH";
+    /**
+     * The google secret for OAUTH
+     * @var string
+     */
+    case GOOGLE_OAUTH_SECRET = "GOOGLE_OAUTH_SECRET";
+    /**
+     * URL for Google OAuth
+     * @var string
+     */
+    case GOOGLE_OAUTH_ENDPOINT = "GOOGLE_OAUTH_ENDPOINT";
+
+
+
+    /** GITHUB OAUTH */
+    /**
+     * A boolean value to determine whether or not GITHUB Oauth is enabled
+    */
+    case GITHUB_OAUTH = "GITHUB_OAUTH";
+    case GITHUB_OAUTH_SECRET = "GITHUB_OAUTH_SECRET";
+    /**
+     * URL for Github OAuth
+     * @var string
+     */
+    case GITHUB_OAUTH_ENDPOINT = "GITHUB_OAUTH_ENDPOINT";
+
+
+
+    case MAGIC_LINK_SECRET_LENGTH = "MAGIC_LINK_SECRET_LENGTH";
+    case USER_UNIQUE_ID_LENGTH = "USER_UNIQUE_ID_LENGTH";
+    case REGISTER_PAGE_PATH = "REGISTER_PAGE_PATH";
+    case USERS_TABLE = "USERS_TABLE";
+
+
+    // PATBASE / DATABASE
+    case DB_DRIVER = "DB_DRIVER";
+    case DB_NAME = "DB_NAME";
+    case DB_HOST = "DB_HOST";
+    case DB_USER = "DB_USER";
+    case DB_PASS = "DB_PASS";
+    case DB_PORT = "DB_PORT";
+    case DB_FETCH_MODE = "DB_FETCH_MODE";
+    case PATBASE_LAZYLOAD = "PATBASE_LAZYLOAD";
 
 
     public function rules(): ?string{
         return match($this){
-            /* ---- EXAMPLE ---- */
-            /** 
-             * 
-             * self::VARIABLE => "required|boolean|default:true", 
-             **/
-
-            /* ---- RULES ---- */
-            /**
-             * - required
-             * - default:value || default:[value1,value2,value3 ...]
-             * - values:[val1,val2,val3 ...]
-             * - type:bool || type:int + Any valid type accepted by Dotenv\Dotenv
-             **/
-
-            // Return nothing for any variables that don't have any requirements / rules.
+            self::PATBASE_LAZYLOAD => "required|boolean|default:true",
+            self::DB_FETCH_MODE => "required",
+            self::DB_DRIVER => "required",
             default => null,
         };
     }
@@ -62,9 +92,9 @@ enum {{ TemplateName }}: string implements Contract{
      * @return array{default: ?string, type: ?string, values: ?array, requirements: ?array}
      */
     public static function parseRules(string $rules): array{
-        // Separate / Extract the rules
+        // Separate the rules
         $rules = explode("|", $rules);
-        // Extract the default Value for env generator (NOT USED FOR LOADER)
+        // Extract the default Value for
         $defaultValue = NULL;
         // Allowed Values for Dotenv::allowedValues() for the self::load() method
         $allowedValues = NULL;

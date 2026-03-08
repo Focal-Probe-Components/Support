@@ -6,7 +6,10 @@
     "autoload": {
         "psr-4": {
             "Probe\\Support\\": "./"
-        }
+        },
+        "files": [
+            "./helpers.php"
+        ]
     },
     "authors": [
         {
@@ -15,9 +18,8 @@
         }
     ],
     "require": {
-        "probe/helpers": "^1.1",
         "symfony/filesystem": "^8.0",
         "laravel/prompts": "^0.3.13",
-        "probe/database": "^1.0"
+        "patryknamyslak/patform": "^1.3"
     }
 }

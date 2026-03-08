@@ -6,7 +6,7 @@ use Probe\Support\Contracts\Publishable;
 use ReflectionClass;
 
 /**
- * Summary of Stub
+ * Utility class for managing Stubs
  */
 class Stub extends Publishable{
     public const string VIEW = "view.stub";
@@ -21,6 +21,7 @@ class Stub extends Publishable{
     }
 
     protected static function pathToResources(): string{
+        return "./stubs/"; // REMOVE
         return config("stubs_path");
     }
 

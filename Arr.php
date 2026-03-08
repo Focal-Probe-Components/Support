@@ -1,0 +1,45 @@
+<?php
+namespace Probe\Support;
+
+use InvalidArgumentException;
+
+
+abstract class Arr{
+    public static function first(array $array): mixed{
+        return array_values($array)[0];
+    }
+    public static function last(array $array): mixed{
+        return array_values($array)[self::count($array) -  1];
+    }
+    public static function count(array $array): int{
+        return count($array);
+    }
+
+    /**
+     * Remove $values from each array in $arrays
+     * @param array[array] $arrays An array of arrays
+     * @param array $values An array of values to remove
+     * @return array[array] Returns a multi dimensional array
+     */
+    function multi_diff(array $arrays, array $values): array{
+        if ($arrays === []) throw new InvalidArgumentException(message: '$arrays must be a two dimensional array, an empty array given');
+        foreach($arrays as &$array){
+            array_diff(array: $array, arrays: $values);
+        }
+        return $arrays;
+    }
+
+    /**
+     * Remove specific `$keys` from each `array` in `$arrays`
+     * @param array[array] $arrays A `two dimensional` array
+     * @param array $keys Either an `array of indices` or `string keys for associative arrays`
+     * @return array[array]
+     */
+    function multi_key_diff(array $arrays, array $keys): array{
+        if ($arrays === []) throw new InvalidArgumentException(message: '$arrays must be a two dimensional array, an empty array given');
+        foreach($arrays as &$array){
+            array_diff_key(array: $array, arrays: $keys);
+        }
+        return $arrays;
+    }
+}

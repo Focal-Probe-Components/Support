@@ -2,6 +2,7 @@
 namespace Probe\Support\Facades;
 
 use Exception;
+use InvalidArgumentException;
 
 
 /**
@@ -32,6 +33,9 @@ class File{
     }
 
     public function createFromStub(string $stubFileName): void{
+        if (!stub($stubFileName)){
+            throw new InvalidArgumentException("{$stubFileName} is not a valid stub");
+        }
         $contents = self::read(stub($stubFileName));
         fwrite($this->file, $contents);
     }

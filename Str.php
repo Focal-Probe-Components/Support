@@ -1,18 +1,31 @@
 <?php
 namespace Probe\Support;
 
+use Probe\Support\Traits\Stringable;
+
 /**
  * String helper class.
  * * Based on the Java String API https://docs.oracle.com/javase/8/docs/api/java/lang/String.html
  */
 class Str{
+    use Stringable;
+
     /**
      * Create a new Str instance
      * @param string $string
      */
     public function __construct(protected string $string){}
 
-
+    public function __toString(): string{
+        return $this->string;
+    }
+    /**
+     * Check whether the stored `$this->string` is `VALID` JSON.
+     * @return bool
+     */
+    public function isJSON(): bool{
+        return JSON::validate($this->string);
+    }
     /**
      * Checks whether the string property is the same as a provided string
      * @param string $string
