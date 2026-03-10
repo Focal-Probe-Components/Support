@@ -36,26 +36,24 @@ class JSON{
         return json_decode(json: $this->json, associative: 1);
     }
     public function toObject(): array{
-        return json_decode($this->json, 0);
+        return json_decode(json: $this->json, associative: 0);
     }
 
     public function __tostring(): string{
         return $this->json;
     }
 
-
-
     public static function validate(string $json): bool{
         return json_validate($json);
     }
 
-    public static function encode(array $data){
+    public static function encode(array $data): bool|string{
         return json_encode($data);
     }
 
     /**
      * Decodes to an associative array by default
-     * * Looking to decode to object? use JSON::decodeToObject()
+     * * Looking to decode to object? use `JSON::decodeToObject()`
      * @return array
      */
     public static function decode(string $json): array{
