@@ -7,13 +7,23 @@ use Probe\Support\Traits\Stringable;
 
 class JSONResponse{
     use Stringable;
+    protected array $body = [];
+
     public function __toString(): string{
         header('Content-Type: application/json; charset=utf-8');
-        return JSON::encode([
+        return JSON::encode(array_merge([
             "code" => $this->responseCode->value,
             "message" => $this->message,
-            $this->body,
-        ]);
+        ], $this->body));
     }
-    public function __construct(protected HttpResponseCode|HttpErrorResponseCode $responseCode = HttpResponseCode::OK, protected ?string $message = null, protected ?array $body = null){}
+    /**
+     * Create a JSON Response object.
+     * @param HttpResponseCode|HttpErrorResponseCode $responseCode
+     * @param mixed $message
+     * @param mixed $body An array that will be appended after the code and message keys in the JSON response.
+     */
+    public function __construct(protected HttpResponseCode|HttpErrorResponseCode $responseCode = HttpResponseCode::OK, protected ?string $message = null, array $body = []){
+        // Remove the code and message key from the body to prevent conflicts with $responseCode and $message
+        $this->body = array_diff_key(array: ["code", "message"], arrays: $body);
+    }
 }
