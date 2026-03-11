@@ -11,6 +11,7 @@ class JSONResponse{
 
     public function __toString(): string{
         header('Content-Type: application/json; charset=utf-8');
+        http_response_code($this->responseCode->value);
         return JSON::encode([
             "code" => $this->responseCode->value,
             "message" => $this->message,
