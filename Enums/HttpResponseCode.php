@@ -1,5 +1,5 @@
 <?php
-namespace Probe\Support\Auth\Enums;
+namespace Probe\Support\Enums;
 
 
 enum HttpResponseCode: int{
